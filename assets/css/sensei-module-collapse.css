@@ -1,0 +1,54 @@
+/********************/
+/* GENERAL SETTINGS */
+/********************/
+
+.clear {
+    clear: both;
+}
+
+/********************/
+/* EXPANDABLE LIST  */
+/********************/
+.expList {
+    clear: both;
+    cursor: pointer;
+}
+.modhead {
+    padding: 0;
+    background: none;
+}
+.listControl{
+    margin-bottom: 5px;
+    float: right;
+    display: block;
+}
+.listControl a {
+}
+.listControl a:hover {
+    color:#222222;
+}
+
+/* Reduce spacing before and after modules  */
+.module .module-lessons {
+    margin: 1em 0 0;
+}
+
+.module {
+    padding-bottom: 1em;
+    margin-bottom: 1em !important;
+}
+
+/* Display Module title inline with toggle button */
+.module header h2 {
+    display: inline;
+}
+
+/* Img styling */
+.entry img {
+    height:1.2em;
+    padding-right:0.5em;
+}
+.entry img,h2 {
+    vertical-align: middle !important;
+    display: inline-block;
+}
