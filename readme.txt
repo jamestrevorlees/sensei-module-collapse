@@ -1,4 +1,4 @@
-=== Welcome Email ===
+=== Sensei Module Collapse ===
 Contributors: Pango
 Donate link:
 Tags:
