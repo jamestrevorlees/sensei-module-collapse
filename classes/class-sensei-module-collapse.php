@@ -24,8 +24,8 @@ class Sensei_Module_Collapse {
         add_action('sensei_single_course_modules_content', array($this, 'enqueue_module_collapse_scripts'), 10);
 
         // Remove native Sensei module title and content display
-        add_action('sensei_single_course_modules_before', 'mod_title_remove_action'); // prioroty of 1, but can be anything higher (lower number) then the priority of the action
-        add_action('sensei_single_course_modules_content', 'mod_content_remove_action'); // prioroty of 1, but can be anything higher (lower number) then the priority of the action
+        add_action('sensei_single_course_modules_before', array($this, 'mod_title_remove_action')); // prioroty of 1, but can be anything higher (lower number) then the priority of the action
+        add_action('sensei_single_course_modules_content', array($this, 'mod_content_remove_action')); // prioroty of 1, but can be anything higher (lower number) then the priority of the action
 
         // Add collapsible module title and content display
         add_action('sensei_single_course_modules_before', array($this, 'course_modules_collapse_title'), 21);
@@ -125,13 +125,20 @@ class Sensei_Module_Collapse {
                 foreach ($lessons as $lesson) {
                     $status = '';
                     $lesson_completed = WooThemes_Sensei_Utils::user_completed_lesson($lesson->ID, get_current_user_id());
+                    $lesson_length = get_post_meta( $lesson->ID, '_lesson_length', true );
                     $title = esc_attr(get_the_title(intval($lesson->ID)));
 
+                    // Get lesson completed status
                     if ($lesson_completed) {
                         $status = 'completed';
                     }
+                    // Get lesson time and set variable if it exists
+                    if ( '' != $lesson_length ) {
+                        $lessons_length = '<span style="float:right" class="lesson-length"><i class="fa fa-clock-o"></i> ' . $lesson_length . __( ' min', 'woothemes-sensei' ) . '</span>';
+                    }
 
-                    $lessons_list .= '<li class="'.$status.'"><a href="'.esc_url(get_permalink(intval($lesson->ID))).'" title="'.esc_attr(get_the_title(intval($lesson->ID))).'">'.apply_filters('sensei_module_lesson_list_title', $title, $lesson->ID).'</a></li>';
+
+                    $lessons_list .= '<li class="'.$status.'"><a href="'.esc_url(get_permalink(intval($lesson->ID))).'" title="'.esc_attr(get_the_title(intval($lesson->ID))).'">'.apply_filters('sensei_module_lesson_list_title', $title, $lesson->ID).$lessons_length.'</a></li>';
 
                     // Build array of displayed lesson for exclusion later
                     $displayed_lessons = array();
