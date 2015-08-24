@@ -10,6 +10,7 @@ class Sensei_Module_Collapse {
     private $order_page_slug;
     public $taxonomy;
 
+
     public function __construct( $file )
     {
         $this->file = $file;
@@ -24,22 +25,28 @@ class Sensei_Module_Collapse {
 
         // Remove native Sensei module title and content display
         add_action('sensei_single_course_modules_before', 'mod_title_remove_action'); // prioroty of 1, but can be anything higher (lower number) then the priority of the action
-
-        function mod_title_remove_action() {
-            global $woothemes_sensei;
-            remove_action( 'sensei_single_course_modules_before', array($woothemes_sensei->modules, 'course_modules_title'),20);
-          }
         add_action('sensei_single_course_modules_content', 'mod_content_remove_action'); // prioroty of 1, but can be anything higher (lower number) then the priority of the action
 
-        function mod_content_remove_action() {
-            global $woothemes_sensei;
-            remove_action( 'sensei_single_course_modules_content', array( $woothemes_sensei->modules, 'course_module_content' ),20);
-        }
-
         // Add collapsible module title and content display
-        add_action('sensei_single_course_modules_before',array( $this,'new_course_modules_title' ), 21);
-        add_action('sensei_single_course_modules_content', array( $this,'course_module_content' ), 20);
+        add_action('sensei_single_course_modules_before',array( $this,'course_modules_collapse_title' ), 21);
+        add_action('sensei_single_course_modules_content', array( $this,'course_module_collapse_content' ), 20);
 
+    }
+
+    /**
+     * Remove native Sensei modules title on single course page
+     */
+    public function mod_title_remove_action() {
+        global $woothemes_sensei;
+        remove_action( 'sensei_single_course_modules_before', array($woothemes_sensei->modules, 'course_modules_title'),20);
+    }
+
+    /**
+     * Remove native Sensei modules content on single course page
+     */
+    public function mod_content_remove_action() {
+        global $woothemes_sensei;
+        remove_action( 'sensei_single_course_modules_content', array( $woothemes_sensei->modules, 'course_module_content' ),20);
     }
 
 	/**
@@ -68,7 +75,7 @@ class Sensei_Module_Collapse {
      * @since 1.8.0
      * @return void
      */
-    public function new_course_modules_title( ) {
+    public function course_modules_collapse_title( ) {
         echo '<header><h2>' . __('Modules', 'woothemes-sensei') . '</h2></header>
         <div class="listControl"><a class="expandList">Expand All</a> | <a class="collapseList">Collapse All</a></div></br>';
 
@@ -80,7 +87,7 @@ class Sensei_Module_Collapse {
      * @since 1.8.0
      * @return void
      */
-    public function course_module_content(){
+    public function course_module_collapse_content(){
         global $post;
         $course_id = $post->ID;
         $modules = Sensei()->modules->get_course_modules( $course_id  );
@@ -127,6 +134,7 @@ class Sensei_Module_Collapse {
                     $lessons_list .= '<li class="' . $status . '"><a href="' . esc_url(get_permalink(intval($lesson->ID))) . '" title="' . esc_attr(get_the_title(intval($lesson->ID))) . '">' . apply_filters('sensei_module_lesson_list_title', $title, $lesson->ID) . '</a></li>';
 
                     // Build array of displayed lesson for exclusion later
+                    $displayed_lessons = array();
                     $displayed_lessons[] = $lesson->ID;
                 }
 
@@ -137,7 +145,8 @@ class Sensei_Module_Collapse {
                         <header class="expList">
                             <?php
                             // module title header with collapsing toggle
-                            $module_url = esc_url(add_query_arg('course_id', $course_id, get_term_link($module, $this->taxonomy)));
+                            // Module URL commented out as it is no linger used, uncomment if you want to use it
+                            // $module_url = esc_url(add_query_arg('course_id', $course_id, get_term_link($module, $this->taxonomy)));
                             echo "<img class='expList' src='" . $this->assets_url ."img/collapse.png' ><h2 class='expList'> " . $module->name . "</h2>"; ?>
                         </header>
                         <li >
