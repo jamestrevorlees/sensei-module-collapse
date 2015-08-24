@@ -1,6 +1,8 @@
 <?php
 
-if ( ! defined('ABSPATH')) exit;
+if ( ! defined('ABSPATH')) {
+    exit;
+}
 
 class Sensei_Module_Collapse {
     private $dir;
@@ -46,19 +48,19 @@ class Sensei_Module_Collapse {
      */
     public function mod_content_remove_action() {
         global $woothemes_sensei;
-        remove_action( 'sensei_single_course_modules_content', array( $woothemes_sensei->modules, 'course_module_content' ),20);
+        remove_action('sensei_single_course_modules_content', array($woothemes_sensei->modules, 'course_module_content'), 20);
     }
 
     /**
      * Load admin JS
      * @return void
      */
-    public function enqueue_module_collapse_scripts () {
+    public function enqueue_module_collapse_scripts() {
         global $wp_version;
 
-        if( $wp_version >= 3.5 ) {
-            wp_enqueue_style('module-collapse',  $this->assets_url . 'css/sensei-module-collapse.css' , '1.0.0');
-            wp_register_script('module-collapsed',  $this->assets_url . 'js/sensei-module-collapse.js' , array(),
+        if ($wp_version >= 3.5) {
+            wp_enqueue_style('module-collapse', $this->assets_url.'css/sensei-module-collapse.css', '1.0.0');
+            wp_register_script('module-collapsed', $this->assets_url.'js/sensei-module-collapse.js', array(),
                 '1.0',
                 true);
             wp_enqueue_script('module-collapsed');
@@ -125,7 +127,7 @@ class Sensei_Module_Collapse {
                 foreach ($lessons as $lesson) {
                     $status = '';
                     $lesson_completed = WooThemes_Sensei_Utils::user_completed_lesson($lesson->ID, get_current_user_id());
-                    $lesson_length = get_post_meta( $lesson->ID, '_lesson_length', true );
+                    $lesson_length = get_post_meta($lesson->ID, '_lesson_length', true);
                     $title = esc_attr(get_the_title(intval($lesson->ID)));
 
                     // Get lesson completed status
@@ -133,8 +135,8 @@ class Sensei_Module_Collapse {
                         $status = 'completed';
                     }
                     // Get lesson time and set variable if it exists
-                    if ( '' != $lesson_length ) {
-                        $lessons_length = '<span style="float:right" class="lesson-length"><i class="fa fa-clock-o"></i> ' . $lesson_length . __( ' min', 'woothemes-sensei' ) . '</span>';
+                    if ('' != $lesson_length) {
+                        $lessons_length = '<span style="float:right" class="lesson-length"><i class="fa fa-clock-o"></i> '.$lesson_length.__(' min', 'woothemes-sensei').'</span>';
                     }
 
 
