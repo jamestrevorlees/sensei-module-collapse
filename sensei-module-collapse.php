@@ -14,28 +14,30 @@
  * @since 1.0.0
  */
 
-if ( ! defined( 'ABSPATH' ) ) exit;
+if ( ! defined( 'ABSPATH' ) ) {
+    exit;
+}
 
 /**
  * Functions used by plugins
  */
 if ( ! class_exists( 'WooThemes_Sensei_Dependencies' ) ) {
-	require_once 'woo-includes/class-woothemes-sensei-dependencies.php';
+    require_once 'woo-includes/class-woothemes-sensei-dependencies.php';
 }
 /**
- * Sensei Detection
- */
+     * Sensei Detection
+     */
 if ( ! function_exists( 'is_sensei_active' ) ) {
-  function is_sensei_active() {
+    function is_sensei_active() {
     return WooThemes_Sensei_Dependencies::sensei_active_check();
-  }
+    }
 }
 /**
- * Include plugin class
- */
+     * Include plugin class
+     */
 if( is_sensei_active() ) {
-	require_once( 'classes/class-sensei-module-collapse.php' );
+    require_once( 'classes/class-sensei-module-collapse.php' );
 
-	global $sensei_module_collapse;
-	$sensei_module_collapse = new Sensei_Module_Collapse(__FILE__);
+    global $sensei_module_collapse;
+    $sensei_module_collapse = new Sensei_Module_Collapse(__FILE__);
 }
