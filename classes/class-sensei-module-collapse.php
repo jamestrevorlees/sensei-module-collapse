@@ -124,9 +124,9 @@ class Sensei_Module_Collapse {
             if (count($lessons) > 0) {
 
                 $lessons_list = '';
+                $lessons_time = '';
                 foreach ($lessons as $lesson) {
                     $status = '';
-                    $lesson_length = '';
                     $lesson_completed = WooThemes_Sensei_Utils::user_completed_lesson($lesson->ID, get_current_user_id());
                     $lesson_length = get_post_meta($lesson->ID, '_lesson_length', true);
                     $title = esc_attr(get_the_title(intval($lesson->ID)));
@@ -137,10 +137,10 @@ class Sensei_Module_Collapse {
                     }
                     // Get lesson time and set variable if it exists
                     if ('' != $lesson_length) {
-                        $lessons_length = '<span style="float:right" class="lesson-length"><i class="fa fa-clock-o"></i> '.$lesson_length.__(' min', 'woothemes-sensei').'</span>';
+                        $lessons_time = '<span style="float:right" class="lesson-length"><i class="fa fa-clock-o"></i> '.$lesson_length.__(' min', 'woothemes-sensei').'</span>';
                     }
 
-                    $lessons_list .= '<li class="'.$status.'"><a href="'.esc_url(get_permalink(intval($lesson->ID))).'" title="'.esc_attr(get_the_title(intval($lesson->ID))).'">'.apply_filters('sensei_module_lesson_list_title', $title, $lesson->ID).$lessons_length.'</a></li>';
+                    $lessons_list .= '<li class="'.$status.'"><a href="'.esc_url(get_permalink(intval($lesson->ID))).'" title="'.esc_attr(get_the_title(intval($lesson->ID))).'">'.apply_filters('sensei_module_lesson_list_title', $title, $lesson->ID).$lessons_time.'</a></li>';
 
                     // Build array of displayed lesson for exclusion later
                     $displayed_lessons = array();
