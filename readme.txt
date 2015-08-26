@@ -12,7 +12,7 @@ Make Sensei modules collapsable
 
 == Description ==
 
-Make Sensei modules collapsable
+Sensei Module Collapse Plugin allows modules to collapse and expand in the single-course view. This makes it more user friendly for learners accessing the modules.
 
 == Installation ==
 
