@@ -124,9 +124,9 @@ class Sensei_Module_Collapse {
             if (count($lessons) > 0) {
 
                 $lessons_list = '';
-                $lessons_time = '';
                 foreach ($lessons as $lesson) {
                     $status = '';
+                    $lessons_time = '';
                     $lesson_completed = WooThemes_Sensei_Utils::user_completed_lesson($lesson->ID, get_current_user_id());
                     $lesson_length = get_post_meta($lesson->ID, '_lesson_length', true);
                     $title = esc_attr(get_the_title(intval($lesson->ID)));

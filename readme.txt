@@ -1,5 +1,5 @@
 === Sensei Module Collapse ===
-Contributors: Pango
+Contributors: Advantage learn
 Donate link:
 Tags:
 License: GPLv3
